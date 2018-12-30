@@ -11,7 +11,7 @@
           </div>
         </el-col>
         <el-col :span="1">
-          <a href="" class="logout">退出</a>
+          <a href="" class="logout" @click='user_logout'>退出</a>
         </el-col>
       </el-row>
     </el-header>
@@ -19,7 +19,7 @@
 
       <!-- 侧边栏 -->
       <el-aside width="200px" class="aside">
-        <el-menu default-active="2" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose">
+        <el-menu default-active="2" class="el-menu-vertical-demo">
           <el-submenu index="1">
             <template slot="title">
               <i class="el-icon-menu"></i> <span>用户管理</span>
@@ -37,8 +37,8 @@
             <el-menu-item-group>
               <el-menu-item index="2-1">
                 <i class="el-icon-location"></i>角色列表</el-menu-item>
-                <el-menu-item index="2-2">
-                    <i class="el-icon-location"></i>权限列表</el-menu-item>
+              <el-menu-item index="2-2">
+                <i class="el-icon-location"></i>权限列表</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
           <!-- 3 -->
@@ -49,10 +49,10 @@
             <el-menu-item-group>
               <el-menu-item index="3-1">
                 <i class="el-icon-location"></i>商品列表</el-menu-item>
-                <el-menu-item index="3-2">
-                    <i class="el-icon-location"></i>分类参数</el-menu-item>
-                    <el-menu-item index="3-3">
-                        <i class="el-icon-location"></i>商品分类</el-menu-item>
+              <el-menu-item index="3-2">
+                <i class="el-icon-location"></i>分类参数</el-menu-item>
+              <el-menu-item index="3-3">
+                <i class="el-icon-location"></i>商品分类</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
           <!-- 4 -->
@@ -85,6 +85,17 @@
 </template>
 <script>
   export default {
+
+
+methods: {
+  user_logout(){
+    localStorage.removeItem('token')
+    this.$router.push({
+      name:'login'
+    });
+    this.$message.success('退出成功')
+  }
+},
 
   }
 </script>
