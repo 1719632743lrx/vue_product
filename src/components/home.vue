@@ -19,13 +19,13 @@
 
       <!-- 侧边栏 -->
       <el-aside width="200px" class="aside">
-        <el-menu default-active="2" class="el-menu-vertical-demo">
+        <el-menu default-active="2" class="el-menu-vertical-demo" router>
           <el-submenu index="1">
             <template slot="title">
               <i class="el-icon-menu"></i> <span>用户管理</span>
             </template>
             <el-menu-item-group>
-              <el-menu-item index="1-1">
+              <el-menu-item index="users">
                 <i class="el-icon-location"></i>用户列表</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
@@ -79,23 +79,35 @@
         </el-menu>
       </el-aside>
       <!-- main部分 -->
-      <el-main class="main">Main</el-main>
+      <el-main class="main">
+        <router-view></router-view>
+      </el-main>
     </el-container>
   </el-container>
 </template>
 <script>
   export default {
+    // 登录验证
+    beforeCreate() {
+      if (!localStorage.getItem('token')) {
+        this.$router.push({
+          name: 'login'
+        });
+        this.$message.warning('请先登录');
+      }
+    },
 
 
-methods: {
-  user_logout(){
-    localStorage.removeItem('token')
-    this.$router.push({
-      name:'login'
-    });
-    this.$message.success('退出成功')
-  }
-},
+    methods: {
+      // 用户退出
+      user_logout() {
+        localStorage.removeItem('token')
+        this.$router.push({
+          name: 'login'
+        });
+        this.$message.success('退出成功')
+      }
+    },
 
   }
 </script>
@@ -109,11 +121,10 @@ methods: {
   }
 
   .aside {
-    background-color: red;
+    height: 100%
   }
 
   .main {
-    background-color: skyblue;
   }
 
   .title {
